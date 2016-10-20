@@ -1,0 +1,17 @@
+version=v2.0.3
+password=246a7bfe5deb01306a1b25496f718112
+
+dataReportSwitch=0
+dataReportPlan=0 0/10 * * * ?
+
+keepOnReportSwitch=1
+keepOnReportRule=433443333333333333
+
+#\u516c\u5b89\u90e8
+#acceptPicCategory=[3][4]
+acceptPicCategory=
+
+outStoreConfigFileName=tabConfig_common.xml
+
+regex_dataReportSwitch=[0,1]
+regex_keepOnReportRule=[0-4]{18}

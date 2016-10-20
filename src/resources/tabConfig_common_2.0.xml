@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tabConfig>
+	<!-- 地市通用版 -->
+	<!-- uniqueKey	表的主键 -->
+	<!-- columns		要查询哪些列，*表示所有的列 -->
+	<!-- reportLevel	上报级别：4-上报到部级、3上报到省级、2上报到市级、1上报到县级 -->
+	<mainTab name="SCENE_INVESTIGATION" uniqueKey="ID" reportLevel="4">
+		<columns>
+		   ID,
+	       INVESTIGATION_NO,
+	       RECEPTION_ID,
+	       CASE_ID,
+	       ITERATION_NO,
+	       INVESTIGATION_DATE_FROM,
+	       INVESTIGATION_DATE_TO,
+	       INVESTIGATION_PLACE,
+	       ENV_TEMPERATURE,
+	       ENV_MOISTNESS,
+	       WIND,
+	       WEATHER,
+	       OTHER_WEATHER,
+	       SCENE_CONDITION,
+	       LIGHTING,
+	       PROTECTION_DATE,
+	       PROTECTION_MEASURE,
+	       PROTECTOR,
+	       INVEST_NOTE_ID,
+	       UPDATED_INVEST_NOTE_ID,
+	       SCENE_LOSS,
+	       OVERTURN_DEGREE,
+	       WOUNDED_AMOUNT,
+	       DEAD_AMOUNT,
+	       LOST_TOTAL_VALUE,
+	       REMNANT_DESC,
+	       SCENE_DISPOSAL,
+	       DIRECTOR,
+	       INVESTIGATOR,
+	       DIRECTOR_IDS,
+	       INVESTIGATOR_IDS,
+	       INVESTIGATOR_DUTIES,
+	       WITNESS,
+	       HANDPRINT_FLAG,
+	       FOOTPRINT_FLAG,
+	       TOOLMARK_FLAG,
+	       BULLETPRINT_FLAG,
+	       SPECIALPRINT_FLAG,
+	       BIO_EVIDENCE_FLAG,
+	       TOXIC_EVIDENCE_FLAG,
+	       PHYSICAL_EVIDENCE_FLAG,
+	       FILE_EVIDENCE_FLAG,
+	       ELECTRO_EVIDENCE_FLAG,
+	       VIDEO_EVIDENCE_FLAG,
+	       OTHER_EVIDENCE_FLAG,
+	       HANDPRINT_AMOUNT,
+	       FOOTPRINT_AMOUNT,
+	       TOOLMARK_AMOUNT,
+	       BULLETPRINT_AMOUNT,
+	       SPECIALPRINT_AMOUNT,
+	       BIO_EVIDENCE_AMOUNT,
+	       TOXIC_EVIDENCE_AMOUNT,
+	       PHYSICAL_EVIDENCE_AMOUNT,
+	       FILE_EVIDENCE_AMOUNT,
+	       ELECTRO_EVIDENCE_AMOUNT,
+	       VIDEO_EVIDENCE_AMOUNT,
+	       OTHER_EVIDENCE_AMOUNT,
+	       SCENE_PHOTO_AMOUNT,
+	       UNUSED_SCENE_PHOTO_AMOUNT,
+	       SCENE_PICTURE_AMOUNT,
+	       SAVE_FLAG,
+	       FINISH_FLAG,
+	       UNFINISH_REASON,
+	       QUALIFIED_FLAG,
+	       UNQUALIFIED_REASON,
+	       NOTE_MADE_FLAG,
+	       NOTE_MADE_DATE,
+	       WRITER,
+	       DRAFTER,
+	       CAMERIST,
+	       VIDEOER,
+	       RECORDIST,
+	       VIDEO_TIME,
+	       RECORD_TIME,
+	       USER_ID,
+	       INIT_SERVER_NO,
+	       MODIFY_FLAG,
+	       MODIFY_REASON,
+	       DELETE_REASON,
+	       MAIN_ORGAN_ID,
+	       MAIN_ORGAN_NAME,
+	       HELP_ORGAN_ID,
+	       HELP_ORGAN_NAME,
+	       TRANSFER_DATE,
+	       TRANSFER_FLAG,
+	       SECRECY,
+	       DELETE_FLAG,
+	       CREATE_USER,
+	       CREATE_DATETIME,
+	       UPDATE_USER,
+	       UPDATE_DATETIME,
+	       RESERVER1,
+	       RESERVER2,
+	       RESERVER3,
+	       RESERVER4,
+	       RESERVER5,
+	       RESERVER6,
+	       RESERVER7,
+	       RESERVER8,
+	       OTHER_PERSONS,
+	       SUBMIT_DATETIME,
+	       ENTRY_VERSION,
+	       BDYY,
+	       BDYY_DESC
+		</columns>
+		<queryByColumn>ID</queryByColumn>
+		
+		<!-- 案件信息 -->
+		<subTab name="SCENE_LAW_CASE" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>ID</queryByColumn>
+			<queryByValue>${CASE_ID}</queryByValue>
+			
+			<!-- 报案人 -->
+			<subTab name="SCENE_VICTIM" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>CASE_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+		</subTab> 
+		
+		<!-- 接警信息 -->
+		<subTab name="SCENE_RECEPTION_DISPATCH" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>ID</queryByColumn>
+			<queryByValue>${RECEPTION_ID}</queryByValue>
+		</subTab>
+		
+		<!-- 分析意见 -->
+		<subTab name="SCENE_ANALYSIS_RESULT" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${SUGGESTION_ID}</queryByValue>
+			</subTab>
+		</subTab>
+		<subTab name="SCENE_ANALYSIS_SUGGESTION" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${COMMISSION_DESC_ID}</queryByValue>
+			</subTab>
+			<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${CRIMINAL_POINTS_ID}</queryByValue>
+			</subTab>
+			<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${BUNCH_REASON_ID}</queryByValue>
+			</subTab>
+			
+			
+			<!-- 分析意见作案工具 -->
+			<subTab name="SCENE_COMMISSION_TOOLS" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ANALYSIS_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 检验鉴定 -->
+		<subTab name="CONSIGNMENT_IDENTIFICATION" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_NO</queryByColumn>
+			<queryByValue>${INVESTIGATION_NO}</queryByValue>
+		</subTab>
+		
+		<!-- 检验鉴定照片 -->
+		<subTab name="IDENTIFICATION_PHOTO" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>IDENTIFICATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		
+		<!-- 物证保管信息 -->
+		<subTab name="EVIDENCE_REGISTRATION" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_NO</queryByColumn>
+			<queryByValue>${INVESTIGATION_NO}</queryByValue>
+			
+			<!-- 物证出库记录 -->
+			<subTab name="EVIDENCE_CHECK_OUT" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>EVIDENCE_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+			<!-- 物证入库记录 -->
+			<subTab name="EVIDENCE_CHECK_IN" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>EVIDENCE_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+			<!-- 物证处理记录 -->
+			<subTab name="EVIDENCE_DISPOSAL" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>EVIDENCE_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 关联现场 -->
+		<subTab name="SCENE_CONJUNCTION" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_NO</queryByColumn>
+			<queryByValue>${INVESTIGATION_NO}</queryByValue>
+		</subTab>
+		
+		<!-- 图片 -->
+		<subTab name="COMMON_PICTURE" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 缩略图 -->
+			<subTab name="COMMON_PICTURE_THUMBNAIL" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>PICTURE_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 勘验检查情况 -->
+		<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>ID</queryByColumn>
+			<queryByValue>${INVEST_NOTE_ID}</queryByValue>
+		</subTab>
+		
+		<!-- 笔录附件 -->
+		<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>ID</queryByColumn>
+			<queryByValue>${UPDATED_INVEST_NOTE_ID}</queryByValue>
+		</subTab>
+		
+		<!-- 现场图 -->
+		<subTab name="SCENE_PICTURE" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		
+		<!-- 现场照片 -->
+		<subTab name="SCENE_PHOTO" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		
+		<!-- 指纹 -->
+		<subTab name="SCENE_HANDPRINT" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 足迹 -->
+		<subTab name="SCENE_FOOTPRINT" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 工具 -->
+		<subTab name="SCENE_TOOLMARK" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 枪弹 -->
+		<subTab name="SCENE_BULLETPRINT" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 特殊 -->
+		<subTab name="SCENE_SPECIALPRINT" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 生物 -->
+		<subTab name="SCENE_BIO_EVIDENCE" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 毒化 -->
+		<subTab name="SCENE_TOXIC_EVIDENCE" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 理化 -->
+		<subTab name="SCENE_PHYSICAL_EVIDENCE" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 文检 -->
+		<subTab name="SCENE_FILE_EVIDENCE" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 电子 -->
+		<subTab name="SCENE_ELECTRO_EVIDENCE" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		
+		<!-- 摄像头信息 -->
+		<subTab name="CEMERA_INFO" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		
+		<!-- 视频物证信息 -->
+		<subTab name="SCENE_VIDEO_EVIDENCE" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+			
+			<!-- 人体特征信息 -->
+			<subTab name="BODY_INFO" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>VIDEO_EVIDENCE_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+			
+			<!-- 嫌疑机动车辆特征信息 -->
+			<subTab name="CAR_BODY_INFO" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>VIDEO_EVIDENCE_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+			
+			<!-- 携带物品特征信息 -->
+			<subTab name="CARRY_ON_INFO" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>VIDEO_EVIDENCE_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+		</subTab>
+			
+		<!-- 其他 -->
+		<subTab name="SCENE_OTHER_EVIDENCE" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<!-- 鉴定书  -->
+			<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${RESERVER8}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 提取物品 -->
+		<subTab name="SCENE_COLLECTED_MATERIAL" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		<subTab name="EVIDENCE_SUBMIT_RECORD" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		
+		<!-- 损失物品 -->
+		<subTab name="SCENE_LOST_GOODS" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		
+		<!-- 见证人 -->
+		<subTab name="SCENE_WITNESS" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		
+		<!-- 尸体信息 -->
+		<subTab name="SCENE_BODY_BASIC" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<subTab name="SCENE_BODY_DISSECTION" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>BODY_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+			
+			<subTab name="SCENE_BODY_PHOTO" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>BODY_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+			
+			<subTab name="SCENE_BODY_SURFACE" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>BODY_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<!-- 基站信息 -->
+		<subTab name="KCT_CASE_INFO" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<subTab name="KCT_LOCALE_DATA" uniqueKey="ID" reportLevel="4"> 
+				<columns>*</columns>
+				<queryByColumn>CASE_INFO_ID</queryByColumn>
+				<queryByValue>${ID}</queryByValue>
+				
+				<subTab name="KCT_BASESTATION_DATA" uniqueKey="ID" reportLevel="4"> 
+					<columns>*</columns>
+					<queryByColumn>LOCALE_DATA_ID</queryByColumn>
+					<queryByValue>${ID}</queryByValue>
+				</subTab>
+			</subTab>
+		</subTab>
+		<!-- 基站信息附件 -->
+		<subTab name="COMMON_ATTACHMENT" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>RESERVER1</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+		</subTab>
+		
+		<!-- 指纹比中信息 -->
+		<subTab name="FB_MATCH_CONDITION" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>CASEID1</queryByColumn>
+			<queryByValue>${INVESTIGATION_NO}</queryByValue>
+		</subTab>
+		<subTab name="FB_MATCH_CONDITION" uniqueKey="ID" reportLevel="4"> 
+			<columns>*</columns>
+			<queryByColumn>CASEID2</queryByColumn>
+			<queryByValue>${INVESTIGATION_NO}</queryByValue>
+		</subTab>
+	</mainTab>
+</tabConfig>

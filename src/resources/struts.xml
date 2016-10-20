@@ -1,0 +1,15 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.enable.SlashesInActionNames" value="true" />
+	<constant name="struts.action.extension" value="action" />
+	<constant name="struts.multipart.saveDir" value="/tmp" />
+
+	<package name="default" extends="struts-default" namespace="/">
+		<action name="*_*" class="{1}Action" method="{2}">
+			<result name="default" type="dispatcher">WEB-INF/pages/{1}/{2}.jsp</result>
+			<result name="redirect" type="redirect">${viewpath}</result>
+		</action>
+	</package>
+</struts>

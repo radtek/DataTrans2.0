@@ -1,0 +1,443 @@
+package com.hisign.datatrans.service;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Writer;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.sql.DataSource;
+
+import oracle.sql.BLOB;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.druid.util.JdbcUtils;
+import com.hisign.datatrans.common.BaseService;
+import com.hisign.datatrans.domain.Constants;
+import com.hisign.datatrans.domain.DataRow;
+import com.hisign.datatrans.domain.DataSourceInfo;
+import com.hisign.datatrans.domain.DataSourceInfoCache;
+import com.hisign.datatrans.utils.ConfigUtil;
+import com.hisign.datatrans.utils.DataSourceUtil;
+import com.hisign.datatrans.utils.StringUtil;
+import com.hisign.datatrans.utils.UUIDService;
+
+/**
+ * 现场信息数据上报业务
+ * 
+ * @author Hong
+ */
+@Service("dataReportService")
+public class DataReportService extends BaseService {
+	
+	/**
+	 * 默认空参数列表
+	 */
+	private static final List DEFAULT_PARAMETERS = new ArrayList();
+
+	/**
+	 * 数据上报
+	 * @param outDataSource
+	 * @param inDataSource
+	 * @param tabConfig
+	 * @param queueFetchSize
+	 */
+	public void dataReport(String unitName, DataSource outDataSource, DataSource inDataSource, Map tabConfig) {
+		Connection outConnection = null;
+		Connection inConnection = null;
+		
+		try {
+			outConnection = outDataSource.getConnection();
+			inConnection = inDataSource.getConnection();
+			
+			// 查询上报队列
+			List<Map<String, Object>> transQueueList = JdbcUtils.executeQuery(outConnection, 
+					"select * from scene_trans_queue where if_deal=?", new ArrayList() {{
+				this.add(Constants.FALSE);
+			}});
+			
+			for (Map<String, Object> queue : transQueueList) {
+				report(unitName, outConnection, inConnection, tabConfig, (String) queue.get("INVESTIGATION_ID"));
+			}
+		} catch (SQLException e) {
+			log.error(e.toString());
+			e.printStackTrace();
+		} catch (IOException e) {
+			log.error(e.toString());
+			e.printStackTrace();
+		} finally {
+			if (null != outConnection) {
+				try {
+					outConnection.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (null != inConnection) {
+				try {
+					inConnection.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 单个现场信息上报
+	 * @param outConnection
+	 * @param inConnection
+	 * @param id
+	 * @throws SQLException 
+	 * @throws IOException 
+	 */
+	public void report(String unitName, Connection outConnection, Connection inConnection, Map tabConfig, final String id)
+			throws SQLException, IOException {
+		log.info(unitName + "["+id+"]" + "开始上报...");
+		long beginTime = System.currentTimeMillis();
+		
+		outConnection.setAutoCommit(false);
+		inConnection.setAutoCommit(false);
+		
+		tabConfig.put("queryByValue", id);
+		List<DataRow> dataList = new ArrayList();
+		// 读取整个现场信息
+		getDataList(outConnection, dataList, tabConfig, null);
+		
+		// 数据入库
+		try {
+			for (DataRow dataRow : dataList) {
+				if (dataRow.getTableInfo().getTableType() == 1 || dataRow.getTableInfo().getTableType() == 2) {
+					// 大字段处理
+					bigTextReport(inConnection, dataRow);
+				} else {
+					JdbcUtils.execute(inConnection, dataRow.getDeleteSQL(), DEFAULT_PARAMETERS);
+					JdbcUtils.execute(inConnection, dataRow.getInsertSQL(), DEFAULT_PARAMETERS);
+				}
+			}
+			
+			// 继续上报
+			if (Constants.TRUE.equals(ConfigUtil.getConfig("keepOnReportSwitch"))) {
+				JdbcUtils.execute(inConnection, "delete from scene_trans_queue where investigation_id=?",  new ArrayList() {{
+					this.add(id);
+				}});
+				
+				JdbcUtils.execute(inConnection, 
+						"insert into scene_trans_queue(investigation_id, if_deal, trans_flag, update_user, update_time) values (?,?,?,?,sysdate)", new ArrayList() {{
+					this.add(id);
+					this.add(Constants.FALSE);
+					this.add(ConfigUtil.getConfig("keepOnReportRule"));
+					this.add(Constants.APP_NAME + ConfigUtil.getConfig("version"));
+				}});
+			}
+			
+			// 更新状态为已上报
+			JdbcUtils.execute(outConnection, 
+					"update scene_trans_queue set if_deal=?, update_user=?, update_time=sysdate where investigation_id=?", new ArrayList() {{
+				this.add(Constants.TRUE);
+				this.add(Constants.APP_NAME + ConfigUtil.getConfig("version"));
+				this.add(id);
+			}});
+			
+			outConnection.commit();
+			inConnection.commit();
+		} catch (SQLException e) {
+			try {
+				outConnection.rollback();
+			} catch (SQLException e1) {
+			}
+			try {
+				inConnection.rollback();
+			} catch (SQLException e1) {
+			}
+			log.error("写入数据错误:" + e.toString());
+			e.printStackTrace();
+		}
+		
+		long endTime = System.currentTimeMillis();
+		log.info(unitName + "["+id+"]" + "上报完成,用时" + (endTime - beginTime) + "ms");
+	}
+
+	/**
+	 * 读取整个现场信息
+	 * @param conn
+	 * @param dataList
+	 * @param tabConfig
+	 * @param dataRow
+	 * @throws SQLException 
+	 * @throws IOException 
+	 */
+	public void getDataList(Connection conn, List dataList, Map tabConfig, DataRow dataRow) throws SQLException, IOException {
+		String uniqueKey = (String) tabConfig.get("uniqueKey");
+		String reportLevel = (String) tabConfig.get("reportLevel");
+		String queryByValue = (String) tabConfig.get("queryByValue");
+		String tableName = (String) tabConfig.get("name");
+		Pattern p = Pattern.compile("\\$\\{*.*\\}");
+		Matcher m = p.matcher(queryByValue);
+		if (m.matches() && null != dataRow) {
+			queryByValue = StringUtil.getMiddleString(queryByValue, "${", "}");
+			queryByValue = (String) dataRow.getColumnData(queryByValue);
+		}
+		if (StringUtils.isBlank(queryByValue)) {
+			return;
+		}
+
+		StringBuffer sql = new StringBuffer("SELECT ");
+		sql.append((String) tabConfig.get("columns")).append(" FROM ").append(tableName).append(" WHERE ")
+				.append((String) tabConfig.get("queryByColumn")).append("='").append(queryByValue).append("'");
+		
+		Statement stmt = conn.createStatement();
+		List<DataRow> dataRows = new ArrayList<DataRow>();
+		
+		ResultSet rs = null;
+		try {
+			rs = stmt.executeQuery(sql.toString());
+			while (rs.next()) {
+				DataRow _dataRow = new DataRow();
+				_dataRow.initDataRow(rs);
+				dataRows.add(_dataRow);
+			}
+		} catch (SQLException e1) {
+			if (e1.getMessage().toUpperCase().indexOf("ORA-00942") == -1) {
+				throw e1;
+			} else {
+				log.error("读取数据错误:" + e1.toString() + "-" + tableName);
+			}
+		} catch (IOException e2) {
+			throw e2;
+		} finally {
+			if (null != rs) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (null != stmt) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		List<Map> subTabList = ((List) tabConfig.get("subTabList"));
+
+		for (DataRow dw : dataRows) {
+			if (null == dw) {
+				continue;
+			} else if ("COMMON_PICTURE".equalsIgnoreCase(tableName)) {
+				dw.setPicture(true);
+				String category = (String) dw.getColumnData("CATEGORY");
+				if (StringUtils.isBlank(category)) {
+					category = "0";
+				}
+				dw.setCategory(category);
+			} else if ("COMMON_PICTURE_THUMBNAIL".equalsIgnoreCase(tableName)) {
+				dw.setPicture(true);
+				String category = (String) dataRow.getColumnData("CATEGORY");
+				if (StringUtils.isBlank(category)) {
+					category = "0";
+				}
+				dw.setCategory(category);
+			} else if ("COMMON_ATTACHMENT".equalsIgnoreCase(tableName)) {
+				String category = (String) dataRow.getColumnData("CATEGORY");
+				dw.setAttachment(true);
+				dw.setCategory(category);
+			}
+			
+			dataList.add(dw);
+			dw.getTableInfo().setTableName(tableName);
+			dw.getTableInfo().setUniqueKey(uniqueKey);
+			dw.getTableInfo().setReportLevel(reportLevel);
+			
+			// 子表出库
+			for (int i = 0; null != subTabList && i < subTabList.size(); i++) {
+				getDataList(conn, dataList, subTabList.get(i), dw);
+			}
+		}
+	}
+
+	public void bigTextReport(Connection inConnection, DataRow dataRow) throws SQLException, IOException {
+		// 判断图片或者附件是否入库
+		String acceptPicCategory = ConfigUtil.getConfig("acceptPicCategory");
+		if ((dataRow.isPicture() || dataRow.isAttachment()) && StringUtils.isNotBlank(acceptPicCategory)
+				&& acceptPicCategory.indexOf("[" + dataRow.getCategory() + "]") == -1) {
+			return;
+		}
+
+		JdbcUtils.execute(inConnection, dataRow.getDeleteSQL(), DEFAULT_PARAMETERS);
+		JdbcUtils.execute(inConnection, dataRow.getInsertSQL(), DEFAULT_PARAMETERS);
+		
+		String blobClobColumnName = dataRow.getTableInfo().getBlobClobColumnName();
+		String tableName = dataRow.getTableInfo().getTableName();
+		String uniqueKey = dataRow.getTableInfo().getUniqueKey();
+		String uniqueValue = (String) dataRow.getColumnData(uniqueKey);
+		
+		String selectSql = "SELECT " + blobClobColumnName + " FROM " + tableName + " WHERE " + uniqueKey + "='"
+				+ uniqueValue + "' FOR UPDATE";
+		
+		Statement stmt = inConnection.createStatement();
+		ResultSet rs = stmt.executeQuery(selectSql.toString());
+		if (!rs.next()) {
+			return;
+		}
+		
+		Object content = null;
+		try {
+			content = rs.getObject(blobClobColumnName);
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			if (null != rs) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (null !=stmt) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		if (content != null && dataRow.getTableInfo().getTableType() == 1) {
+			BLOB blob = (BLOB) content;
+			OutputStream outStream = null;
+			try {
+				outStream = blob.setBinaryStream(0L);
+				outStream.write((byte[]) dataRow.getColumnData(blobClobColumnName));
+			} catch (SQLException e) {
+				throw e;
+			} catch (IOException e) {
+				throw e;
+			} finally {
+				if (null != outStream) {
+					try {
+						outStream.close();
+					} catch (IOException e) {
+					}
+				}
+				if (null != rs) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+					}
+				}
+			}
+		} else if (content != null && dataRow.getTableInfo().getTableType() == 2) {
+			Clob clob = (Clob) content;
+			
+			/*if(clob instanceof com.alibaba.druid.proxy.jdbc.ClobProxyImpl){
+				com.alibaba.druid.proxy.jdbc.ClobProxyImpl impl = (com.alibaba.druid.proxy.jdbc.ClobProxyImpl)clob;
+				clob = impl.getRawClob(); // 获取原生的这个 Clob
+			}*/
+			
+			Writer writer = null;
+			try {
+				writer = clob.setCharacterStream(0L);
+//				String tempClob = (String) dataRow.getColumnData(blobClobColumnName);
+//				writer.write(StringUtils.isEmpty(tempClob) ? "" : tempClob);
+				writer.write((String) dataRow.getColumnData(blobClobColumnName));
+			} catch (SQLException e) {
+				throw e;
+			} catch (IOException e) {
+				throw e;
+			} finally {
+				if (null != writer) {
+					try {
+						writer.close();
+					} catch (IOException e) {
+					}
+				}
+				if (null != rs) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 更新数据库配置信息
+	 * @param dataSourceInfo
+	 * @throws SQLException
+	 */
+	public void modifyDataSourceInfo(final DataSourceInfo dataSourceInfo) throws SQLException {
+		JdbcUtils.execute(DataSourceInfoCache.INSTANCE.getDataSource(), 
+				"update xcky_url_index set open_flag=? where id=?", new ArrayList() {{
+					this.add(dataSourceInfo.getOpenFlag());
+					this.add(dataSourceInfo.getId());
+				}});
+		
+		DataSourceInfoCache.INSTANCE.get(dataSourceInfo.getId()).setOpenFlag(dataSourceInfo.getOpenFlag());
+	}
+	
+	/**
+	 * 删除数据库配置信息
+	 * @param dataSourceInfo
+	 * @throws SQLException
+	 */
+	public void deleteDataSourceInfo(final DataSourceInfo dataSourceInfo) throws SQLException {
+		JdbcUtils.execute(DataSourceInfoCache.INSTANCE.getDataSource(), 
+				"delete from xcky_url_index where id=?", new ArrayList() {{
+					this.add(dataSourceInfo.getId());
+				}});
+		
+		DataSourceInfoCache.INSTANCE.remove(dataSourceInfo.getId());
+	}
+	
+	/**
+	 * 新增数据库配置信息
+	 * @param dataSourceInfo
+	 * @throws SQLException
+	 */
+	public void addDataSourceInfo(final DataSourceInfo dataSourceInfo) throws SQLException {
+		dataSourceInfo.setId(UUIDService.getInstance().simpleHex());
+		dataSourceInfo.setOpenFlag(Constants.TRUE);
+		DataSource dataSource = DataSourceUtil.createDataSource(dataSourceInfo);
+		dataSourceInfo.setDataSource(dataSource);
+		
+		JdbcUtils.execute(DataSourceInfoCache.INSTANCE.getDataSource(), 
+				"insert into xcky_url_index(id, unit_name, unit_code, db_url, db_username, db_password, open_flag, create_user, create_date) values (?,?,?,?,?,?,?,?,sysdate)", 
+				new ArrayList() {{
+					this.add(dataSourceInfo.getId());
+					this.add(dataSourceInfo.getUnitName());
+					this.add(dataSourceInfo.getUnitCode());
+					this.add(dataSourceInfo.getDbUrl());
+					this.add(dataSourceInfo.getDbUserName());
+					this.add(dataSourceInfo.getDbPassword());
+					this.add(dataSourceInfo.getOpenFlag());
+					this.add(Constants.ADMIN);
+				}});
+		
+		DataSourceInfoCache.INSTANCE.put(dataSourceInfo);
+	}
+	
+	/**
+	 * 查询待上报数据量
+	 * @param dataSource
+	 * @return
+	 * @throws SQLException
+	 */
+	public Integer findDataReportTotalCount(DataSource dataSource) throws SQLException {
+		List<Map<String, Object>> list = JdbcUtils.executeQuery(dataSource, 
+				"select count(1) as val from scene_trans_queue where if_deal=?", new ArrayList() {{
+			this.add(Constants.FALSE);
+		}});
+		
+		return Integer.parseInt((String.valueOf(list.get(0).get("VAL"))));
+	}
+	
+}

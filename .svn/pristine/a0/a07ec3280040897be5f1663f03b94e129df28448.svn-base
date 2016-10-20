@@ -1,0 +1,1083 @@
+/*通用样式*/
+body,div,p,td,tr,select,input,button {
+	font-size: 10pt;
+	font-family: 宋体;
+}
+
+td {
+	padding-left: 2px;
+	padding-right: 2px;
+	word-break: break-all;
+}
+
+body {
+	margin: 0pt;
+}
+
+A:link {
+	COLOR: #003366;
+	TEXT-DECORATION: none;
+}
+
+A:visited {
+	COLOR: #003366;
+	TEXT-DECORATION: none;
+}
+
+A:active {
+	COLOR: #003366;
+	TEXT-DECORATION: none;
+}
+
+A:hover {
+	COLOR: #990000;
+	TEXT-DECORATION: underline;
+}
+
+A.title:link {
+	COLOR: #000000;
+	TEXT-DECORATION: none;
+}
+
+A.title:visited {
+	COLOR: #000000;
+	TEXT-DECORATION: none;
+}
+
+A.title:active {
+	COLOR: #000000;
+	TEXT-DECORATION: none;
+}
+
+A.title:hover {
+	COLOR: #000000;
+	TEXT-DECORATION: underline;
+}
+
+A.usedEvidence:link {
+	COLOR: #FF0000;
+	TEXT-DECORATION: underline;
+}
+
+A.usedEvidence:visited {
+	COLOR: #FF0000;
+	TEXT-DECORATION: underline;
+}
+
+A.usedEvidence:active {
+	COLOR: #FF0000;
+	TEXT-DECORATION: underline;
+}
+
+A.usedEvidence:hover {
+	COLOR: #FF0000;
+	TEXT-DECORATION: underline;
+}
+
+td.loginTitle {
+	background-image: url(imgs/login_title.gif);
+}
+
+td.loginCenter {
+	background-image: url(imgs/login_center.gif);
+}
+
+td.loginBottom {
+	background-image: url(imgs/login_bottom.gif);
+}
+
+td.loginLabel {
+	color: #041554;
+	font-weight: bold;
+	text-align: right
+}
+
+td.loginContent {
+	width: 100px;
+	height: 28px;
+	border: #041554 0px solid;
+}
+
+/*通用标题*/
+tr.title {
+	padding-left: 4px;
+	color: #0000FF;
+	height: 24px;
+	background-image: url(imgs/tr_title.gif);
+}
+
+/*通用标题*/
+tr.title2 {
+	text-align: center;
+	padding-left: 4px;
+	color: #0000FF;
+	height: 60px;
+	background-color: #CEEBFF;
+	font-weight: bold;
+}
+
+/*带图片的通用标题*/
+tr.pictitle {
+	padding-left: 4px;
+	color: #0000FF;
+	height: 30px;
+	background-image: url(imgs/pictitle.gif);
+	font-weight: bold;
+	font-size: 15px;
+}
+
+/*表头标签样式*/
+tr.list_title { /*ackground-image:url(imgs/label_bg.gif);*/
+	text-align: center;
+	height: 22px;
+	background-color: #CEEBFF;
+}
+
+/*表头标签样式_gab_total*/
+tr.list_title_gab { /*ackground-image:url(imgs/label_bg.gif);*/
+	text-align: center;
+	height: 40px;
+	background-color: #CEEBFF;
+}
+
+/*表头标签样式*/
+tr.list_title2 { /*ackground-image:url(imgs/label_bg.gif);*/
+	text-align: center;
+	height: 22px;
+	background-color: #CEEBFF;
+}
+
+/*定义通用页面具体表格内容的样式单行*/
+tr.list_single {
+	background-color: #FFFFFF;
+	height: 20px;
+}
+
+/*定义通用页面具体表格内容的样式双行*/
+tr.list_double {
+	background-color: #F7F9FC;
+	height: 20px;
+}
+
+/*定义串并搜索结果的td*/
+td.bunch_td {
+	background-color: #FFFFFF;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/*定义串并搜索结果的案件名称*/
+span.bunchedcase_title {
+	color: #0000CC;
+	font-size: 14px;
+}
+
+/*定义串并搜索结果的标签名称*/
+span.bunched_label {
+	color: #008000;
+	font-size: 14px;
+}
+
+/*图片样式*/
+img {
+	border: 0px;
+}
+
+/*整体样式*/
+table.form_table {
+	background-color: #7BAFE3;
+	border: 0px;
+	border-color: #7BAFE3;
+	border-style: solid;
+}
+
+/*标题表格的样式*/
+table.title_table {
+	border: 1px solid #7BAFE3;
+}
+
+/*提示表格的样式*/
+table.note_table {
+	background-color: #CCF0C3;
+	border: 1px solid #CCF0C3;
+}
+
+/*列表操作及选择列的样式*/
+td.text_table {
+	text-align: center;
+}
+
+/*标签样式*/
+td.form_label {
+	padding-left: 4px;
+	background-color: #EEF5FF;
+	text-align: left;
+	height: 22px;
+}
+
+/*输入区域样式*/
+td.form_content {
+	padding-left: 4px;
+	background-color: #FFFFFF;
+	text-align: left;
+}
+
+td.form_content_my {
+	padding-left: 4px;
+	background-color: #FFFFFF;
+	text-align: center;
+}
+
+/*输入区域样式*/
+td.form_content0 {
+	padding-left: 0px;
+	background-color: #FFFFFF;
+	text-align: left;
+}
+
+td.form_content1 {
+	padding-left: 4px;
+	background-color: #FFFFFF;
+	text-align: left;
+}
+
+/*提示文字输入区域样式*/
+td.note_content {
+	padding-left: 4px;
+	padding-right: 4px;
+	background-color: #FFFFFF;
+}
+
+/*带下划线的标签*/
+td.underline_label {
+	border-bottom: 1px solid;
+	padding-bottom: 2px;
+}
+
+/*图片输入区域样式*/
+td.pic_content {
+	background-color: #FFFFFF;
+	height: 120px;
+	text-align: center;
+	width: 25%;
+}
+
+td.fullpic_content {
+	background-color: #FFFFFF;
+	text-align: center;
+}
+
+/*足迹图片输入区域样式*/
+td.footpic_content {
+	background-color: #FFFFFF;
+	height: 130px;
+	text-align: center;
+	width: 20%;
+}
+
+/*足迹图片输入区域样式*/
+td.footpic_content1 {
+	background-color: #FFFFFF;
+	height: 500px;
+	text-align: center;
+	width: 20%;
+}
+
+/*足迹文字区域样式*/
+td.footpicname_content {
+	background-color: #FFFFFF;
+	height: 25px;
+	text-align: center;
+}
+
+/*图片输入区域样式*/
+td.picname_content {
+	background-color: #FFFFFF;
+	height: 25px;
+	text-align: center;
+}
+
+span.selectWraper {
+	
+}
+
+/*下拉样式*/
+select {
+	width: 90%;
+}
+
+/*用在缩略图页面中的下拉样式*/
+select.thumbnail_select {
+	width: 140px;
+}
+
+/*用在缩略图页面中的下拉样式*/
+select.common_select {
+	width: 214px;
+}
+
+/*查询页面中的下拉样式*/
+select.commonquery_select {
+	width: 200px;
+}
+
+/*查询页面中的下拉样式*/
+select.common_select1 {
+	width: 210px;
+}
+
+/*查询页面中的下拉样式*/
+select.query_select {
+	width: 120px;
+}
+
+/*正常页面中带选择按钮的下拉样式*/
+select.button_select {
+	width: 224px;
+}
+
+/*正常页面中带选择按钮的下拉样式*/
+select.button_select2 {
+	width: 164px;
+}
+
+/*短宽度的下拉样式*/
+select.short_select {
+	width: 70px;
+}
+
+/*中宽度的下拉样式*/
+select.mid_select {
+	width: 120px;
+}
+
+/*派出所下拉样式*/
+select.anfadi_select {
+	width: 80px;
+}
+
+/*年份下拉样式*/
+select.year_select {
+	width: 55px;
+}
+
+/*月份下拉样式*/
+select.month_select {
+	width: 40px;
+}
+
+/*只是显示一下下拉样式*/
+select.only_select {
+	width: 15px;
+}
+
+/*只是显示一下下拉样式*/
+select.short_select2 {
+	width: 100px;
+}
+
+/*只是显示一下下拉样式*/
+select.short_select3 {
+	width: 90px;
+}
+
+/*只是显示一下下拉样式*/
+select.short_select4 {
+	width: 80%;
+}
+
+/*只是显示一下下拉样式*/
+select.short_select5 {
+	width: 25%;
+}
+
+/*只是显示一下下拉样式*/
+select.short_select6 {
+	width: 200px;
+}
+/*多行文本框样式*/
+textarea {
+	border: #8CAFD0 1px solid;
+	border-spacing: 3px;
+	Line-Height: 100%;
+	width: 90%;
+}
+
+/*多行文本框样式*/
+textarea.full_area {
+	border: #8CAFD0 1px solid;
+	border-spacing: 3px;
+	Line-Height: 100%;
+	width: 99%;
+}
+
+/*用在缩略图页面中的多行文本框样式*/
+textarea.thumbnail_area {
+	border: #8CAFD0 1px solid;
+	border-spacing: 3px;
+	line-height: 100%;
+	width: 140px;
+}
+
+/*用在正常页面中的多行文本框样式*/
+textarea.common_area {
+	border: #8CAFD0 1px solid;
+	border-spacing: 3px;
+	line-height: 100%;
+	width: 140px;
+}
+
+/*没有指定宽度的多行文本框样式*/
+textarea.free_area {
+	border: #8CAFD0 1px solid;
+	border-spacing: 3px;
+	line-height: 100%;
+	width: 140px;
+}
+
+/*没有指定宽度的多行文本框样式*/
+textarea.longfield {
+	border: #8CAFD0 1px solid;
+	border-spacing: 3px;
+	line-height: 100%;
+	width: 95%;
+}
+
+/*普通按钮样式*/
+input.button {
+	padding-top: 2px;
+	border: 0px;
+	background-image: url(imgs/input_button.gif);
+	height: 20px;
+	width: 80px;
+}
+
+/*普通按钮样式*/
+input.button2 {
+	padding-top: 2px;
+	border: 0px;
+	background-image: url(imgs/input_button.gif);
+	height: 20px;
+	width: 40px;
+}
+
+input.button3 {
+	border: 0px;
+	background-image: url(imgs/searchBtn.png);
+	height: 36px;
+	width: 45px;
+	cursor: hand;
+}
+
+/*鼠标滑过按钮样式*/
+input.button_hover {
+	padding-top: 2px;
+	border: 0px;
+	background-image: url(imgs/button_hover.gif);
+	height: 20px;
+	width: 80px;
+}
+
+/*激活按钮样式*/
+input.button_active {
+	padding-top: 2px;
+	border: 0px;
+	background-image: url(imgs/button_active.gif);
+	height: 20px;
+	width: 80px;
+}
+
+/*较短按钮样式-宽度自适应*/
+input.short_button {
+	padding-top: 2px;
+	border: 0px;
+	background-image: url(imgs/short_button.gif);
+	height: 20px;
+	align: center;
+}
+
+/*较长按钮样式-宽度自适应*/
+input.long_button {
+	padding-top: 2px;
+	border: 0px;
+	background-image: url(imgs/long_button.gif);
+	height: 20px;
+	align: center;
+}
+
+/*弹出菜单的按钮样式-宽度自适应*/
+input.select_button {
+	margin-left: 4px;
+	margin-right: 4px;
+	padding-top: 2px;
+	padding-left: 1px;
+	padding-right: 2px;
+	border: 0px;
+	background-image: url(imgs/select_button.gif);
+	height: 18px;
+	align: center;
+}
+
+/*默认输入框样式*/
+input.field {
+	border: #8CAFD0 1px solid;
+	width: 210px;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+input.norm_field {
+	border: #8CAFD0 1px solid;
+	width: 85%;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+input.field70 {
+	border: #8CAFD0 1px solid;
+	width: 70%;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+input.field90 {
+	border: #8CAFD0 1px solid;
+	width: 90%;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*日期输入框样式*/
+input.date_field {
+	border: #8CAFD0 1px solid;
+	width: 160px;
+	Line-Height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*用在缩略图页面中的单行文本框样式*/
+input.thumbnail_field {
+	border: #8CAFD0 1px solid;
+	width: 140px;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*用在缩略图页面中的单行文本框样式*/
+input.short_field {
+	border: #8CAFD0 1px solid;
+	width: 100px;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*用在缩略图页面中的单行文本框样式*/
+input.longfield {
+	border: #8CAFD0 1px solid;
+	width: 95%;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+input.longfield2 {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	width: 80%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+input.longfield3 {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	width: 70%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*用在缩略图页面中的单行文本框样式*/
+input.shortfield {
+	border: #8CAFD0 1px solid;
+	width: 70%;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*用在缩略图页面中的单行文本框样式*/
+input.middlefield {
+	border: #8CAFD0 1px solid;
+	width: 75px;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*用在缩略图页面中的单行文本框样式*/
+input.minfield {
+	border: #8CAFD0 1px solid;
+	width: 30px;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*用在缩略图页面中的单行文本框样式*/
+input.fixedfield {
+	border: #8CAFD0 1px solid;
+	width: 140px;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*输入框样式百分比输入框*/
+input.normalfield {
+	border: #8CAFD0 1px solid;
+	width: 60%;
+	line-height: 120%;
+	border-spacing: 3px;
+	height: 20px;
+}
+
+/*输入框样式－占满百分比输入框*/
+input.fullfield {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	border-spacing: 3px;
+	width: 99%;
+	height: 20px;
+}
+
+/*足迹编码输入框样式*/
+input.footcodefield {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	border-spacing: 3px;
+	width: 180px;
+	height: 20px;
+}
+
+/*6位编码输入框样式*/
+input.regioncodefield {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	border-spacing: 3px;
+	width: 50px;
+	height: 20px;
+}
+
+/*23位编号输入框样式*/
+input.codefield {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	border-spacing: 3px;
+	width: 175px;
+	height: 20px;
+}
+
+/*输入框样式－足迹照片输入框*/
+input.photofield {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	border-spacing: 3px;
+	width: 190px;
+	height: 20px;
+}
+
+/*输入框样式－照片输入框2*/
+input.photofield2 {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	border-spacing: 3px;
+	width: 170px;
+	height: 20px;
+}
+
+/*输入框样式－选择输入框*/
+input.selectfield {
+	border: #8CAFD0 1px solid;
+	Line-Height: 120%;
+	border-spacing: 3px;
+	width: 164px;
+	height: 20px;
+}
+
+/*输入框样式－足迹照片选择输入框*/
+input.footcodecheckbox {
+	Line-Height: 100%;
+	border-spacing: 3px;
+	padding-left: 1px;
+}
+
+.selects {
+	border-spacing: 3px;
+	Line-Height: 100%;
+	height: 80px;
+}
+
+/*在超过样式定义的200px宽度后,后面的字符将被...替换.可用span或div引用*/
+.overflow {
+	width: 100px;
+	white-space: nowrap;
+	word-break: keep-all;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+span.redSpan {
+	color: #FF0000;
+}
+
+div.secrecy {
+	font-weight: bold;
+	color: #FF0000;
+}
+
+span.prompt {
+	padding-left: 4px;
+	font-size: 12px;
+	color: #FF0000;
+	vertical-align: text-bottom;
+}
+
+span.prompt1 {
+	color: #FF0000;
+}
+
+span.prompt2 {
+	color: #FF0000;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+span.prompt3 {
+	color: #000000;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+span.prompt4 {
+	color: #041554;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+/**左右分隔的框架表格样式**/
+table.frameTable {
+	margin-top: 10px;
+	text-align: center;
+	border: 0px;
+}
+
+/**左右分隔的框架表格中右侧带竖线的td样式**/
+td.separatorTd {
+	border-left: 1px solid #bbb;
+	padding-left: 0px;
+	vertical-align: top;
+	text-align: center;
+}
+
+/**图片缩略图显示区域样式**/
+div.pictureArea {
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 10px;
+}
+
+div.bigPicture {
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+	border: 1px solid #dddddd;
+}
+
+div.dragablePicture {
+	text-align: center;
+	z-index: 19;
+	position: absolute;
+	overflow: hidden;
+}
+
+/**放大镜缩小镜位置**/
+div.picViewBar {
+	text-align: left;
+	position: absolute;
+	width: 100%;
+}
+
+/**define special button styles**/
+div.optArea {
+	text-align: right;
+	width: 99%;
+	margin-top: 10px;
+	margin-bottom: 1px;
+}
+
+input.checkinButton {
+	background-image: url(imgs/button/checkin_button.gif);
+	padding-top: 4px;
+	padding-left: 10px;
+	margin-left: 4px;
+	border: 0px;
+	height: 20px;
+	width: 80px;
+}
+
+input.checkoutButton {
+	padding-top: 4px;
+	border: 0px;
+	background-image: url(imgs/button/checkout_button.gif);
+	padding-left: 10px;
+	margin-left: 4px;
+	height: 20px;
+	width: 80px;
+}
+
+input.disposalButton {
+	padding-top: 4px;
+	border: 0px;
+	background-image: url(imgs/button/disposal_button.gif);
+	padding-left: 10px;
+	margin-left: 4px;
+	height: 20px;
+	width: 80px;
+}
+
+input.newButton {
+	padding-top: 4px;
+	border: 0px;
+	background-image: url(imgs/button/new_button.gif);
+	padding-left: 10px;
+	margin-left: 4px;
+	height: 20px;
+	width: 80px;
+}
+
+input.deleteButton {
+	padding-top: 4px;
+	border: 0px;
+	background-image: url(imgs/button/delete_button.gif);
+	padding-left: 10px;
+	margin-left: 4px;
+	height: 20px;
+	width: 80px;
+}
+
+input.modifyButton {
+	padding-top: 4px;
+	border: 0px;
+	background-image: url(imgs/button/modify_button.gif);
+	padding-left: 10px;
+	margin-left: 4px;
+	height: 20px;
+	width: 80px;
+}
+
+/**层样式*/
+.myDIV {
+	border-color: #cccccc;
+	border: solid;
+	border-width: 1;
+}
+
+.border {
+	border: 1px red solid;
+	display: inline;
+}
+
+.highLightShow {
+	background-color: #fdecae;
+}
+
+.highLightShowGre{
+	background-color: #CCEEFF;
+}
+
+.infobox {
+	position: absolute;
+	overflow: auto;
+	top: 0;
+	width: 50%;
+	padding: 10;
+	background-color: #EEF5FF;
+	display: none;
+	filter: Alpha(opacity = 100);
+	border: 3px solid silver;
+	text-align: center;
+}
+
+.imgbox {
+	border: 2px solid #EEF5FF;
+	text-align: center;
+	float: left;
+	margin-right: 3px;
+	margin-bottom: 3px;
+	cursor: hand;
+	background-image: url(imgs/loading.gif);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.imgbox2 {
+	border: 2px solid #EEF5FF;
+	text-align: center;
+	cursor: hand;
+	background-image: url(imgs/loading.gif);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.current {
+	cursor: hand;
+	background-color: #CEEBFF;
+}
+
+.uploader {
+	cursor: hand;
+}
+
+.alarmGreen {
+	background-color: green;
+	line-height: 25px;
+	height: 25px;
+	width: 25px;
+	text-align: center;
+	color: #333333;
+	border: 1px solid silver;
+}
+
+.alarmYellow {
+	background-color: yellow;
+	line-height: 25px;
+	height: 25px;
+	width: 25px;
+	text-align: center;
+	color: #333333;
+	border: 1px solid silver;
+}
+
+.alarmRed {
+	background-color: red;
+	line-height: 25px;
+	height: 25px;
+	width: 25px;
+	text-align: center;
+	color: #333333;
+	border: 1px solid silver;
+}
+
+.alarmGreenSmall {
+	background-color: green;
+	line-height: 15px;
+	height: 15px;
+	width: 15px;
+	text-align: center;
+	color: #333333;
+	border: 1px solid silver;
+}
+
+.alarmYellowSmall {
+	background-color: yellow;
+	line-height: 15px;
+	height: 15px;
+	width: 15px;
+	text-align: center;
+	color: #333333;
+	border: 1px solid silver;
+}
+
+.alarmRedSmall {
+	background-color: red;
+	line-height: 15px;
+	height: 15px;
+	width: 15px;
+	text-align: center;
+	color: #333333;
+	border: 1px solid silver;
+}
+
+.alarmFont {
+	font-weight:bold;
+}
+
+
+#mainNav {
+ 	list-style: none;
+	float: left;
+	margin: 0px;
+}
+
+#mainNav li {
+	width: 200px;
+	height: 40px;
+	line-height: 40px;
+	list-style: none;
+	float: left;
+	cursor: hand;
+	background-color: #EBEBEB;
+	background-image: url(imgs/navBtn.jpg);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+#mainNav li.current {
+	background-color: #C36615;
+	background-image: url(imgs/navCurrentBtn.jpg);
+}
+
+#mainNav li.lastDone {
+	background-color: #7C8437;
+	background-image: url(imgs/navLastDoneBtn.jpg);
+}
+
+#mainNav li.done {
+	background-color: #7C8437;
+	background-image: url(imgs/navDoneBtn.jpg);
+}
+
+#mainNav li a,#mainNav li a:link,#mainNav li a:visited,#mainNav li a:hover,#mainNav li a:active
+{
+	color: #999999;
+}
+
+#mainNav li.lastDone a,#mainNav li.lastDone a:link,#mainNav li.lastDone a:visited,#mainNav li.lastDone a:hover,#mainNav li.lastDone a:active,#mainNav li.current a,#mainNav li.current a:link,#mainNav li.current a:visited,#mainNav li.current a:hover,#mainNav li.current a:active,#mainNav li.done a,#mainNav li.done a:link,#mainNav li.done a:visited,#mainNav li.done a:hover,#mainNav li.done a:active
+{
+	color: #fff;
+}
+
+#mainNav li a em {
+	display: block;
+	margin: 0 0 0 10px;
+	font-style: normal;
+	font-weight: bold;
+}
+
+#mainNav li.mainNavNoBg {
+	background-image: none;
+}
+
+
+a.opt_link2:link {
+	COLOR:#333333; TEXT-DECORATION: none;border: 1px solid #7BAFE3; padding: 3px;height: 20px;font-weight: bold;
+}
+
+a.opt_link2:visited {
+	COLOR:#333333; TEXT-DECORATION:none;border: 1px solid #CC9966; padding: 3px;height: 20px;font-weight: bold;
+}
+
+a.opt_link2:hover {
+	COLOR:#990000; TEXT-DECORATION: underline;border: 1px solid #CC9966; padding: 3px;height: 20px;font-weight: bold;
+}

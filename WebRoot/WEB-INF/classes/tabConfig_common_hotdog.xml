@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tabConfig>
+	<!-- 地市通用版 -->
+	<!-- uniqueKey	表的主键 -->
+	<!-- columns		要查询哪些列，*表示所有的列 -->
+	<!-- reportLevel	上报级别：4-上报到部级、3上报到省级、2上报到市级、1上报到县级 -->
+	<mainTab name="SCENE_INVESTIGATION" uniqueKey="ID" reportLevel="4">
+		<columns>
+		   ID,
+	       INVESTIGATION_NO,
+	       RECEPTION_ID,
+	       CASE_ID,
+	       ITERATION_NO,
+	       INVESTIGATION_DATE_FROM,
+	       INVESTIGATION_DATE_TO,
+	       INVESTIGATION_PLACE,
+	       ENV_TEMPERATURE,
+	       ENV_MOISTNESS,
+	       WIND,
+	       WEATHER,
+	       OTHER_WEATHER,
+	       SCENE_CONDITION,
+	       LIGHTING,
+	       PROTECTION_DATE,
+	       PROTECTION_MEASURE,
+	       PROTECTOR,
+	       INVEST_NOTE_ID,
+	       UPDATED_INVEST_NOTE_ID,
+	       SCENE_LOSS,
+	       OVERTURN_DEGREE,
+	       WOUNDED_AMOUNT,
+	       DEAD_AMOUNT,
+	       LOST_TOTAL_VALUE,
+	       REMNANT_DESC,
+	       SCENE_DISPOSAL,
+	       DIRECTOR,
+	       INVESTIGATOR,
+	       DIRECTOR_IDS,
+	       INVESTIGATOR_IDS,
+	       INVESTIGATOR_DUTIES,
+	       WITNESS,
+	       HANDPRINT_FLAG,
+	       FOOTPRINT_FLAG,
+	       TOOLMARK_FLAG,
+	       BULLETPRINT_FLAG,
+	       SPECIALPRINT_FLAG,
+	       BIO_EVIDENCE_FLAG,
+	       TOXIC_EVIDENCE_FLAG,
+	       PHYSICAL_EVIDENCE_FLAG,
+	       FILE_EVIDENCE_FLAG,
+	       ELECTRO_EVIDENCE_FLAG,
+	       VIDEO_EVIDENCE_FLAG,
+	       OTHER_EVIDENCE_FLAG,
+	       HANDPRINT_AMOUNT,
+	       FOOTPRINT_AMOUNT,
+	       TOOLMARK_AMOUNT,
+	       BULLETPRINT_AMOUNT,
+	       SPECIALPRINT_AMOUNT,
+	       BIO_EVIDENCE_AMOUNT,
+	       TOXIC_EVIDENCE_AMOUNT,
+	       PHYSICAL_EVIDENCE_AMOUNT,
+	       FILE_EVIDENCE_AMOUNT,
+	       ELECTRO_EVIDENCE_AMOUNT,
+	       VIDEO_EVIDENCE_AMOUNT,
+	       OTHER_EVIDENCE_AMOUNT,
+	       SCENE_PHOTO_AMOUNT,
+	       UNUSED_SCENE_PHOTO_AMOUNT,
+	       SCENE_PICTURE_AMOUNT,
+	       SAVE_FLAG,
+	       FINISH_FLAG,
+	       UNFINISH_REASON,
+	       QUALIFIED_FLAG,
+	       UNQUALIFIED_REASON,
+	       NOTE_MADE_FLAG,
+	       NOTE_MADE_DATE,
+	       WRITER,
+	       DRAFTER,
+	       CAMERIST,
+	       VIDEOER,
+	       RECORDIST,
+	       VIDEO_TIME,
+	       RECORD_TIME,
+	       USER_ID,
+	       INIT_SERVER_NO,
+	       MODIFY_FLAG,
+	       MODIFY_REASON,
+	       DELETE_REASON,
+	       MAIN_ORGAN_ID,
+	       MAIN_ORGAN_NAME,
+	       HELP_ORGAN_ID,
+	       HELP_ORGAN_NAME,
+	       TRANSFER_DATE,
+	       TRANSFER_FLAG,
+	       SECRECY,
+	       DELETE_FLAG,
+	       CREATE_USER,
+	       CREATE_DATETIME,
+	       UPDATE_USER,
+	       UPDATE_DATETIME,
+	       RESERVER1,
+	       RESERVER2,
+	       RESERVER3,
+	       RESERVER4,
+	       RESERVER5,
+	       RESERVER6,
+	       RESERVER7,
+	       RESERVER8,
+	       OTHER_PERSONS,
+	       SUBMIT_DATETIME,
+	       ENTRY_VERSION,
+	       BDYY,
+	       BDYY_DESC
+		</columns>
+		<queryByColumn>ID</queryByColumn>
+		
+		<!-- 分析意见 -->
+		<subTab name="SCENE_ANALYSIS_RESULT" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${SUGGESTION_ID}</queryByValue>
+			</subTab>
+		</subTab>
+		
+		<subTab name="SCENE_ANALYSIS_SUGGESTION" uniqueKey="ID" reportLevel="4">
+			<columns>*</columns>
+			<queryByColumn>INVESTIGATION_ID</queryByColumn>
+			<queryByValue>${ID}</queryByValue>
+			
+			<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${COMMISSION_DESC_ID}</queryByValue>
+			</subTab>
+			<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${CRIMINAL_POINTS_ID}</queryByValue>
+			</subTab>
+			<subTab name="COMMON_BIGTEXT_CLOB" uniqueKey="ID" reportLevel="4">
+				<columns>*</columns>
+				<queryByColumn>ID</queryByColumn>
+				<queryByValue>${BUNCH_REASON_ID}</queryByValue>
+			</subTab>
+		</subTab>
+		
+	</mainTab>
+</tabConfig>

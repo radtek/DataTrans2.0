@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.2//EN" "http://java.sun.com/j2ee/dtds/application_1_2.dtd">
+   <application id="Application_ID">
+      <display-name>DataTrans</display-name>
+      <description>DataTrans EAR file containing one WAR for hisign DataTrans system 1.0 beta</description>
+      <module id="WebModule_1">
+         <web>
+            <web-uri>DataTrans.war</web-uri>
+            <context-root>/DataTrans</context-root>
+         </web>
+      </module>
+      <security-role id="SecurityRole_1">
+         <description>All Authenticated users in the enterprise.</description>
+         <role-name>All Role</role-name>
+      </security-role>
+   </application>
